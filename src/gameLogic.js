@@ -9,22 +9,35 @@ const calculateWinner = (squares) => {
     [0, 4, 8],
     [2, 4, 6],
   ]
-  
+
   for (const [a, b, c] of lines) {
     if (squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a]
     }
   }
   return null
+  //make a fetch call and return the result
+  // return fetch("http://localhost:5000/winner/").then((res) => res.json())
 }
 
+// const getFreshBoard = () => Array(9).fill(null)
+const getFreshBoard = async () => {
+  fetch("http://localhost:5000/board/")
+    .then((data) => data.json())
+    .then((data) => (data.squares))
+}
+const getNextBoard = (squares, i, xIsNext) => (squares[i] = xIsNext ? "X" : "O")
 
-const getFreshBoard = () => Array(9).fill(null)
-const getNextBoard = (squares, i, xIsNext) => squares[i] = xIsNext ? "X" : "O"
+module.exports = { calculateWinner, getFreshBoard, getNextBoard }
 
-module.exports = {calculateWinner, getFreshBoard, getNextBoard}
-
-// create a repository flask backend tictactoe - virtual enviroment, pytest, gitignore
-// create requirements file - latest version of flask
-// create python file - the 3 functions converted to python and tested
-// read - fetch (javascript) - git request to pokemon edpoint and log response
+// make a fetch call to the back end or axios
+// const getPokeData = () => {
+//   let data = fetch("https://pokeapi.co/api/v2/pokemon/ditto", {
+//     method: "GET",
+//     headers: { "Content-type": "application/json" },
+//     body: JSON.stringify(),
+//   }).then((data) => {
+//     return data.json()
+//   })
+//   return data
+// }
