@@ -30,10 +30,42 @@
 //   console.log(data)
 //   return pokemonName, pokemonAbilities
 // })
+
+
+// const getPractice = async () => {
+//   let response = await fetch("http://localhost:5000/hello/", {
+//     mode: "no-cors",
+//   }).then((response) => {
+//     return response.json()
+//   })
+//   return response
+// }
+
+// const root = document.getElementById("root")
+
+// getPractice().then((data) => {
+//   root.textContent = data
+//   console.log(data)
+//   console.log("abc")
+// })
+
+//AJAX?
+//AXIOS
+
 const getPractice = async () => {
-    const response = await fetch("http://localhost:5000/hello/", { mode : "no-cors" })
-    //   const data = await response.json()
-    return response.text()
-  }
-  
-  getPractice().then((data) => console.log(data))
+  const response = await fetch("http://localhost:5000/hello/", {
+    mode: "no-cors",
+  })
+  // const data = await response.json()
+  console.log(response)
+  console.log(response.text())
+  return response.text()
+}
+
+const root = document.getElementById("root")
+
+getPractice().then((data) => {
+  root.textContent = data
+  console.log(data)
+  console.log("abc")
+})

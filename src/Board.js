@@ -15,6 +15,7 @@ const Board = () => {
   }
 
   const handleClick = (i) => {
+    console.log(squares)
     const squaresB = squares.slice()
     if (calculateWinner(squaresB) || squaresB[i]) {
       return
