@@ -5,6 +5,6 @@ import React from "react"
 
 test("game works", () => {
   render(<Game />)
-  const linkElement = screen.getByText("Loading")
-  expect(linkElement).toBeInTheDocument()
+  const textElement = screen.getByText("Loading")
+  expect(textElement).toBeInTheDocument()
 })
