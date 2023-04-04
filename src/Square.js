@@ -1,11 +1,11 @@
-import './Square.css';
+import "./Square.css"
 
 const Square = (props) => {
-    return (
-        <button className="square" onClick={props.onClick}>
-            {props.value}
-        </button>
-    );
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  )
 }
 
-export default Square;
+export default Square

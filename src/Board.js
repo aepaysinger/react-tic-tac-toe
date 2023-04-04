@@ -1,29 +1,53 @@
-import { useState } from "react"
-import Square from "./Square"
+import { useEffect, useState } from "react"
 import { calculateWinner, getFreshBoard, getNextBoard } from "./gameLogic"
+import Square from "./Square"
+import "./Board.css"
 
 const Board = () => {
-  const [squares, setSquares] = useState(getFreshBoard())
+  const [squares, setSquares] = useState(null)
   const [xIsNext, setXIsNext] = useState(true)
+  const [status, setStatus] = useState("Next player: " + (xIsNext ? "X" : "O"))
+  const [winner, setWinner] = useState(null)
+  useEffect(() => {
+    const getFreshSquares = async () => {
+      let freshSquares = await getFreshBoard()
+      console.log(freshSquares)
+      setSquares(freshSquares)
+    }
+    getFreshSquares()
+  }, [])
+  useEffect(() => {
+    if (winner) {
+      setStatus("Winner: " + winner)
+    } else {
+      setStatus("Next player: " + (xIsNext ? "X" : "O"))
+    }
+  }, [winner, xIsNext])
 
-  const winner = calculateWinner(squares)
-  let status
-  if (winner) {
-    status = "Winner: " + winner
-  } else {
-    status = "Next player: " + (xIsNext ? "X" : "O")
-  }
+  useEffect(() => {
+    const getWinner = async () => {
+      if (squares) {
+        let calculatedWinner = await calculateWinner(squares)
+        console.log(calculatedWinner)
+        setWinner(calculatedWinner)
+      }
+    }
+    getWinner()
+  }, [squares])
 
   const handleClick = (i) => {
-    const squaresB = squares.slice()
-    if (calculateWinner(squaresB) || squaresB[i]) {
+    if (winner || squares[i]) {
       return
     }
-    getNextBoard(squaresB, i, xIsNext)
-    setSquares(squaresB)
-    setXIsNext(!xIsNext)
+    const displayNextBoard = async () => {
+      let nextBoard = await getNextBoard(squares, i, xIsNext)
+      setSquares(nextBoard)
+      setXIsNext(!xIsNext)
+    }
+    displayNextBoard()
   }
 
+  if (!squares) return <div>Loading</div>
   return (
     <div>
       <div className="status">{status}</div>
